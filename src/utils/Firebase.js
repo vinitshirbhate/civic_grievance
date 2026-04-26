@@ -1,25 +1,77 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
+import { apiClient, setAuthToken } from "./apiClient";
 
-// --- TEMPORARY HARD-CODED KEYS ---
-// This is for debugging only.
-const firebaseConfig = {
-  apiKey: "AIzaSyA_1rKM9X4p83er-gj9a2_wnmVvsOEb0S0",
-  authDomain: "nagar-ani-sih.firebaseapp.com",
-  projectId: "nagar-ani-sih",
-  storageBucket: "nagar-ani-sih.firebasestorage.app",
-  messagingSenderId: "91601128161",
-  appId: "1:91601128161:web:b17478e895435475de05a0",
-  measurementId: "G-GVS4P9LRK2"
+let currentUser = null;
+let initialized = false;
+let refreshPromise = null;
+const listeners = new Set();
+
+function toLegacyUserShape(user) {
+  if (!user) return null;
+  return {
+    uid: user.id,
+    displayName: user.name,
+    email: user.email,
+    role: user.role,
+  };
+}
+
+function notifyAuthState() {
+  for (const callback of listeners) {
+    callback(currentUser);
+  }
+}
+
+export async function refreshAuthState(force = false) {
+  if (refreshPromise && !force) {
+    return refreshPromise;
+  }
+
+  refreshPromise = apiClient
+    .get("/auth/me")
+    .then((response) => {
+      currentUser = toLegacyUserShape(response.data.user);
+      initialized = true;
+      notifyAuthState();
+      return currentUser;
+    })
+    .catch(() => {
+      currentUser = null;
+      initialized = true;
+      notifyAuthState();
+      return null;
+    })
+    .finally(() => {
+      refreshPromise = null;
+    });
+
+  return refreshPromise;
+}
+
+export function setAuthenticatedUser(user) {
+  currentUser = toLegacyUserShape(user);
+  initialized = true;
+  notifyAuthState();
+}
+
+export const auth = {
+  get currentUser() {
+    return currentUser;
+  },
+  onAuthStateChanged(callback) {
+    listeners.add(callback);
+    callback(currentUser);
+
+    if (!initialized) {
+      refreshAuthState().catch(() => null);
+    }
+
+    return () => listeners.delete(callback);
+  },
+  async signOut() {
+    setAuthToken(null);
+    currentUser = null;
+    initialized = true;
+    notifyAuthState();
+  },
 };
-// ---------------------------------
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
-const storage = getStorage(app);
-export { db, auth, storage };
 

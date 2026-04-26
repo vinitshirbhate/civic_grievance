@@ -3,12 +3,12 @@ import { Button } from "@mui/material";
 import MuiTextField from "@mui/material/TextField";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { handleRegistration } from "../utils/FirebaseFunctions";
+import { registerCitizen } from "../utils/apiAuth";
 
 export const TextField = styled(MuiTextField)((props) => ({
   width: "100%",
   [`& fieldset`]: {
-    borderRadius: "15px",
+    borderRadius: "14px",
   },
 }));
 const RegisterAccount = () => {
@@ -31,12 +31,11 @@ const RegisterAccount = () => {
   return (
     <div
       className="RegisterAccount flex flex-col gap-5 items-center 
-      border-solid border-gray-500 px-3 lg:px-4 py-5 mx-4 lg:mx-12 rounded-3xl
-      border-2 shadow-[0px_20px_20px_10px_#00000024] bg-opacity-20
+      px-4 lg:px-6 py-6 mx-2 lg:mx-6 rounded-3xl
     "
     >
-      <p className="Slogan text-sm lg:text-xl text-center">
-        Register a account to be a <b>HERO</b>
+      <p className="Slogan text-sm lg:text-lg text-center text-slate-700">
+        Join your city network and start creating civic impact.
       </p>
       <form
         action=""
@@ -44,14 +43,17 @@ const RegisterAccount = () => {
         onSubmit={(e) => {
           e.preventDefault();
 
-          handleRegistration(FormData)
-            .then((user) => {
-              console.log(user);
+          if (Err) {
+            return;
+          }
 
+          registerCitizen(FormData)
+            .then(() => {
               navigate("/citizen-dashboard?newUser=true");
             })
             .catch((err) => {
-              setErr(err.message.split(": ")[1]);
+              const message = err?.response?.data?.message || err.message;
+              setErr(message);
             });
         }}
       >
@@ -98,9 +100,9 @@ const RegisterAccount = () => {
             setFormData({ ...FormData, confirmPassword: e.target.value })
           }
         />
-        <p className="text-red-600">{Err}</p>
-        <Button variant="contained" type="submit">
-          REGISTER
+        <p className="text-red-600 text-sm">{Err}</p>
+        <Button variant="contained" type="submit" className="brand-button">
+          Create Account
         </Button>
       </form>
     </div>

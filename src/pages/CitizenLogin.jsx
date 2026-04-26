@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { TextField } from "../components/RegisterAccount";
-import { auth } from "../utils/Firebase";
-import { handleLogin } from "../utils/FirebaseFunctions";
 import SpinnerModal from "../components/SpinnerModal";
+import { auth } from "../utils/Firebase";
+import { loginUser } from "../utils/apiAuth";
+
 const CitizenLogin = () => {
   const [FormData, setFormData] = useState({
     email: "",
@@ -14,26 +15,28 @@ const CitizenLogin = () => {
   const [Spinner, setSpinner] = useState(false);
   const [Err, setErr] = useState("");
   const navigate = useNavigate();
+
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         return navigate("/citizen-dashboard");
       }
     });
-  }, []);
+
+    return () => unsubscribe();
+  }, [navigate]);
+
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="min-h-screen page-shell">
       <SpinnerModal visible={Spinner} />
       <Navbar />
-      <div className=" lg:px-96 px-4 h-3/4 flex flex-col justify-center">
-        <h2 className="mt-[25%] lg:mt-0 leading-normal font-bold text-center text-base lg:text-[2rem] my-8">
+      <div className="lg:px-96 px-3 py-10 flex flex-col justify-center">
+        <h2 className="section-title text-center my-8">
           Citizen Login
         </h2>
         <div
           className="LoginBox flex flex-col gap-5 items-center 
-      border-solid border-gray-500 px-3 lg:px-12 py-12 mx-4 lg:mx-12 rounded-3xl
-      border-2 shadow-[0px_20px_20px_10px_#00000024] bg-opacity-20 lg:h-3/4
-      justify-center
+      px-4 lg:px-12 py-10 mx-1 lg:mx-12 rounded-3xl justify-center
     "
         >
           <form
@@ -41,9 +44,10 @@ const CitizenLogin = () => {
             onSubmit={(e) => {
               e.preventDefault();
               setSpinner(true);
-              handleLogin(FormData)
-                .then(async (user) => {
-                  if (!user.official) {
+              loginUser(FormData)
+                .then(async ({ user }) => {
+                  const isOfficialUser = user?.role === "official" || user?.role === "admin";
+                  if (!isOfficialUser) {
                     navigate("/citizen-dashboard");
                   } else {
                     await auth.signOut();
@@ -51,9 +55,8 @@ const CitizenLogin = () => {
                   }
                 })
                 .catch((err) => {
-                  err.message.split(": ")[1]
-                    ? setErr(err.message.split(": ")[1])
-                    : setErr(err.message);
+                  const message = err?.response?.data?.message || err.message;
+                  setErr(message);
                 })
                 .finally(() => {
                   setSpinner(false);
@@ -79,9 +82,9 @@ const CitizenLogin = () => {
               }
               required
             />
-            <p className="text-red-600">{Err}</p>
+            <p className="text-red-600 text-sm">{Err}</p>
 
-            <Button variant="contained" type="submit">
+            <Button variant="contained" type="submit" className="brand-button">
               Login
             </Button>
           </form>

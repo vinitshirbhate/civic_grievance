@@ -12,7 +12,7 @@ const DashboardLinkButton = ({
 }) => {
   return (
     <Link
-      className=""
+      className="block"
       to={link}
       onClick={() => {
         onClick ? onClick() : null;
@@ -20,19 +20,21 @@ const DashboardLinkButton = ({
     >
       <div
         className={
-          `DashboardLinkButton  border shadow-[3px_4px_4px_rgba(0,0,0,0.26)] rounded-lg border-solid border-black w-100 flex flex-col justify-center items-center px-10 py-10 mx-10 my-5 
-      lg:h-96 lg:text-xl
+          `DashboardLinkButton w-100 flex flex-col justify-center items-center px-8 py-10 mx-10 my-5 gap-2 text-center
+      lg:h-80 lg:text-lg
       ` + className
         }
       >
-        <FontAwesomeIcon size={"2x"} icon={icon} />
-        <p className="mt-6 text-center">{name}</p>
+        <div className="w-14 h-14 rounded-full bg-cyan-50 border border-cyan-200 flex items-center justify-center text-cyan-800">
+          <FontAwesomeIcon size={"lg"} icon={icon} />
+        </div>
+        <p className="mt-3 text-center font-bold">{name}</p>
         <p
-          className={`text-center text-xs lg:text-base ${
+          className={`text-center text-xs lg:text-sm text-slate-500 ${
             !subtitle ? "hidden" : "block"
           }`}
         >
-          ({subtitle})
+          {subtitle}
         </p>
       </div>
     </Link>

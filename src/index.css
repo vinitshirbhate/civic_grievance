@@ -1,18 +1,559 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
 
+:root {
+    --bg-base: #f4f8f9;
+    --bg-muted: #dcecf3;
+    --surface: rgba(255, 255, 255, 0.86);
+    --surface-strong: #ffffff;
+    --text-primary: #102023;
+    --text-secondary: #4f6470;
+    --brand: #0e7490;
+    --brand-strong: #0f5f76;
+    --accent: #f59e0b;
+    --ok: #16a34a;
+    --danger: #dc2626;
+    --shadow-soft: 0 10px 30px rgba(8, 43, 58, 0.09);
+    --shadow-card: 0 14px 44px rgba(8, 43, 58, 0.13);
+    --radius-xl: 22px;
+    --radius-lg: 16px;
+}
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-
+    font-family: "Manrope", sans-serif;
 }
 
+html,
+body,
+#root {
+    min-height: 100%;
+}
 
 body {
-    background: linear-gradient(90deg, #FFFEFF 0%, #D7FFFE 100%);
-    /* background: #f5f5f5; */
+    color: var(--text-primary);
+    background:
+        radial-gradient(circle at 10% 10%, rgba(14, 116, 144, 0.18), transparent 28%),
+        radial-gradient(circle at 88% 14%, rgba(245, 158, 11, 0.18), transparent 26%),
+        radial-gradient(circle at 70% 85%, rgba(22, 163, 74, 0.12), transparent 30%),
+        linear-gradient(135deg, var(--bg-base) 0%, var(--bg-muted) 100%);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.page-shell {
+    padding: clamp(16px, 2.4vw, 28px);
+}
+
+.hero-card,
+.surface-card {
+    background: var(--surface);
+    border: 1px solid rgba(15, 95, 118, 0.12);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(8px);
+    border-radius: var(--radius-xl);
+}
+
+.surface-card {
+    padding: clamp(14px, 2vw, 22px);
+}
+
+.section-title {
+    font-size: clamp(1.25rem, 3.1vw, 2.2rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    font-weight: 800;
+}
+
+.section-subtitle {
+    color: var(--text-secondary);
+    font-size: clamp(0.95rem, 1.9vw, 1.05rem);
+}
+
+.brand-button {
+    border-radius: 999px;
+    padding: 10px 18px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+.metric-tile {
+    border: 1px solid rgba(15, 95, 118, 0.14);
+    background: var(--surface-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    padding: 12px 14px;
+}
+
+.metric-label {
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.metric-value {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-top: 4px;
+}
+
+.DashboardLinkButton {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.95) 0%, rgba(247, 254, 255, 0.86) 100%);
+    border: 1px solid rgba(14, 116, 144, 0.17);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-card);
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.DashboardLinkButton:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 48px rgba(9, 65, 83, 0.18);
+}
+
+.RegisterAccount,
+.LoginBox {
+    background: var(--surface);
+    border: 1px solid rgba(14, 116, 144, 0.16);
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(8px);
+}
+
+.Navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.85);
+    border-bottom: 1px solid rgba(15, 95, 118, 0.12);
+    box-shadow: 0 8px 24px rgba(16, 32, 35, 0.06);
+    backdrop-filter: blur(8px);
+}
+
+.frost-panel {
+    background: var(--surface);
+    border-radius: var(--radius-xl);
+    border: 1px solid rgba(15, 95, 118, 0.12);
+    box-shadow: var(--shadow-soft);
+}
+
+.civic-cover {
+    position: relative;
+    min-height: 620px;
+    border-radius: 28px;
+    overflow: hidden;
+    border: 1px solid rgba(15, 95, 118, 0.22);
+    box-shadow: 0 24px 56px rgba(6, 53, 74, 0.24);
+    background:
+        radial-gradient(circle at 15% 20%, rgba(245, 158, 11, 0.35), transparent 32%),
+        radial-gradient(circle at 86% 18%, rgba(22, 163, 74, 0.3), transparent 28%),
+        linear-gradient(165deg, #0d5f76 0%, #10485a 56%, #0a2f3b 100%);
+}
+
+.civic-cover-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(165deg, rgba(6, 34, 43, 0.08) 0%, rgba(6, 34, 43, 0.22) 72%);
+    z-index: 1;
+}
+
+.civic-cover-art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.94;
+    z-index: 0;
+}
+
+.civic-cover-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    padding: 28px;
+    gap: 6px;
+}
+
+.civic-cover-badge {
+    width: fit-content;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    color: #f8fafc;
+    background: rgba(255, 255, 255, 0.13);
+    backdrop-filter: blur(6px);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    margin-bottom: 12px;
+}
+
+.civic-cover-title {
+    color: #f8fafc;
+    font-size: clamp(1.3rem, 2.8vw, 2.15rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    font-weight: 800;
+    max-width: 14ch;
+}
+
+.civic-cover-subtitle {
+    color: rgba(241, 245, 249, 0.9);
+    margin-top: 4px;
+    font-size: 0.9rem;
+    max-width: 24ch;
+}
+
+.civic-cover-points {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.civic-cover-points span {
+    border: 1px solid rgba(241, 245, 249, 0.34);
+    color: #f8fafc;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.32);
+    padding: 6px 12px;
+}
+
+.civic-cover-metrics {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.civic-cover-metrics > div {
+    border: 1px solid rgba(241, 245, 249, 0.3);
+    background: rgba(15, 23, 42, 0.36);
+    border-radius: 14px;
+    padding: 10px 12px;
+}
+
+.civic-cover-metrics .metric-label {
+    color: rgba(241, 245, 249, 0.72);
+    font-size: 0.68rem;
+}
+
+.civic-cover-metrics .metric-value {
+    color: #ffffff;
+    font-size: 0.95rem;
+    margin-top: 2px;
+}
+
+.animate-in {
+    animation: rise-in 540ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+}
+
+.animate-in-delay-1 {
+    animation: rise-in 600ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+    animation-delay: 70ms;
+}
+
+.animate-in-delay-2 {
+    animation: rise-in 640ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+    animation-delay: 130ms;
+}
+
+.gamification-shell {
+    border-radius: 26px;
+    padding: clamp(16px, 2.4vw, 24px);
+    border: 1px solid rgba(15, 95, 118, 0.2);
+    background:
+        radial-gradient(circle at 6% 12%, rgba(14, 116, 144, 0.08), transparent 28%),
+        radial-gradient(circle at 94% 8%, rgba(245, 158, 11, 0.1), transparent 30%),
+        rgba(255, 255, 255, 0.9);
+    box-shadow: var(--shadow-card);
+    color: var(--text-primary);
+}
+
+.gamification-header {
+    display: flex;
+    gap: 14px;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.gamification-kicker {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--brand);
+}
+
+.gamification-title {
+    font-size: clamp(1.4rem, 2.4vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+}
+
+.gamification-subtitle {
+    font-size: 0.9rem;
+    max-width: 52ch;
+    color: var(--text-secondary);
+    margin-top: 6px;
+}
+
+.gamification-points-tile {
+    border-radius: 16px;
+    border: 1px solid rgba(14, 116, 144, 0.2);
+    background: linear-gradient(135deg, rgba(14, 116, 144, 0.08), rgba(14, 116, 144, 0.02));
+    padding: 10px 14px;
+    min-width: 132px;
+}
+
+.gamification-points-tile.rank-starter {
+    border-color: rgba(100, 116, 139, 0.35);
+    background: linear-gradient(135deg, rgba(100, 116, 139, 0.15), rgba(100, 116, 139, 0.05));
+}
+
+.gamification-points-tile.rank-watcher {
+    border-color: rgba(14, 116, 144, 0.3);
+}
+
+.gamification-points-tile.rank-helper {
+    border-color: rgba(22, 163, 74, 0.35);
+    background: linear-gradient(135deg, rgba(22, 163, 74, 0.14), rgba(22, 163, 74, 0.04));
+}
+
+.gamification-points-tile.rank-hero {
+    border-color: rgba(2, 132, 199, 0.35);
+    background: linear-gradient(135deg, rgba(2, 132, 199, 0.14), rgba(2, 132, 199, 0.04));
+}
+
+.gamification-points-tile.rank-champion {
+    border-color: rgba(217, 119, 6, 0.35);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.14), rgba(245, 158, 11, 0.05));
+}
+
+.gamification-points-tile.rank-guardian {
+    border-color: rgba(109, 40, 217, 0.35);
+    background: linear-gradient(135deg, rgba(109, 40, 217, 0.14), rgba(109, 40, 217, 0.05));
+}
+
+.gamification-points-tile.rank-sentinel {
+    border-color: rgba(15, 23, 42, 0.35);
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.16), rgba(15, 23, 42, 0.05));
+}
+
+.gamification-points-tile p {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: var(--text-secondary);
+}
+
+.gamification-points-tile h4 {
+    font-size: 1.9rem;
+    line-height: 1;
+    margin-top: 4px;
+    font-weight: 800;
+}
+
+.gamification-progress-wrap {
+    margin-top: 16px;
+}
+
+.gamification-progress-track {
+    width: 100%;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(14, 116, 144, 0.12);
+    overflow: hidden;
+}
+
+.gamification-progress-fill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #0e7490, #f59e0b);
+    transition: width 260ms ease;
+}
+
+.gamification-metrics-grid {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.gamification-metric-card {
+    border-radius: 14px;
+    border: 1px solid rgba(15, 95, 118, 0.14);
+    background: rgba(255, 255, 255, 0.72);
+    padding: 10px;
+}
+
+.gamification-metric-card p {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-secondary);
+}
+
+.gamification-metric-card h4 {
+    margin-top: 5px;
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.gamification-panel {
+    border-radius: 14px;
+    border: 1px solid rgba(15, 95, 118, 0.14);
+    background: rgba(255, 255, 255, 0.72);
+    padding: 12px;
+}
+
+.gamification-panel-title {
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: var(--brand);
+}
+
+.gamification-action-list {
+    margin-top: 10px;
+    display: grid;
+    gap: 8px;
+}
+
+.gamification-action-list div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid rgba(15, 95, 118, 0.12);
+    background: rgba(255, 255, 255, 0.85);
+    padding: 8px 10px;
+}
+
+.gamification-action-list.compact {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.gamification-action-list p {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.gamification-action-list span {
+    font-size: 0.95rem;
+    font-weight: 800;
+}
+
+.gamification-badges {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 9px;
+}
+
+.gamification-badge {
+    border-radius: 12px;
+    border: 1px solid rgba(15, 95, 118, 0.14);
+    padding: 10px;
+}
+
+.gamification-badge.unlocked {
+    background: rgba(22, 163, 74, 0.12);
+    border-color: rgba(22, 163, 74, 0.26);
+}
+
+.gamification-badge.locked {
+    background: rgba(148, 163, 184, 0.14);
+}
+
+.gamification-badge p {
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.gamification-badge span {
+    display: block;
+    margin-top: 4px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.loading-pop {
+    animation: loading-pop 420ms ease-out both;
+}
+
+@keyframes rise-in {
+    from {
+        opacity: 0;
+        transform: translateY(16px) scale(0.985);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes loading-pop {
+    from {
+        opacity: 0;
+        transform: scale(0.94);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.Toastify__toast {
+    border-radius: 14px !important;
+    border: 1px solid rgba(15, 95, 118, 0.16);
+    box-shadow: var(--shadow-card) !important;
+}
+
+.Toastify__progress-bar {
+    background: linear-gradient(90deg, #0e7490, #16a34a) !important;
+}
+
+@media (max-width: 1023px) {
+    .civic-cover {
+        min-height: 430px;
+    }
+
+    .civic-cover-content {
+        padding: 18px;
+    }
+
+    .DashboardLinkButton {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .gamification-metrics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .gamification-action-list.compact {
+        grid-template-columns: 1fr;
+    }
+
+    .gamification-badges {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 @tailwind base;

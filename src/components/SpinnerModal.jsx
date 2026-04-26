@@ -1,18 +1,24 @@
 import React from "react";
 import { RotateLoader } from "react-spinners";
-import spinnerBottomImage from '../assets/spinner-bottom.png'
+import spinnerBottomImage from "../assets/spinner-bottom.png";
+
 const SpinnerModal = ({ visible }) => {
   return (
     <div
-      className={`bg-black bg-opacity-90 h-screen w-full fixed flex justify-center items-center z-20 flex-col ${
+      className={`fixed inset-0 bg-slate-950/65 backdrop-blur-sm h-screen w-full flex justify-center items-center z-[1300] flex-col transition-opacity duration-200 ${
         visible ? "block" : "hidden"
       }`}
     >
-      <RotateLoader color="#fef303" />
-      <p className="text-white font-extrabold mt-20 text-xl">Please Wait</p>
+      <div className="frost-panel px-8 py-7 flex flex-col items-center loading-pop">
+        <RotateLoader color="#0E7490" />
+        <p className="text-slate-800 font-extrabold mt-8 text-lg">Please wait...</p>
+        <p className="text-slate-500 text-sm mt-1">Processing your request</p>
+      </div>
       <img
-      className="absolute bottom-0 w-auto lg:h-40 h-20"
-      src={spinnerBottomImage} alt="" srcset="" />
+        className="absolute bottom-0 w-auto lg:h-36 h-16 opacity-90"
+        src={spinnerBottomImage}
+        alt=""
+      />
     </div>
   );
 };

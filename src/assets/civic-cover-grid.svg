@@ -1,0 +1,56 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Civic issue dashboard illustration">
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b4d5d"/>
+      <stop offset="100%" stop-color="#082f49"/>
+    </linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#bg1)"/>
+  <circle cx="120" cy="120" r="120" fill="#22c55e" opacity="0.2"/>
+  <circle cx="1060" cy="140" r="150" fill="#f59e0b" opacity="0.22"/>
+
+  <rect x="80" y="140" width="1040" height="540" rx="26" fill="#0f172a" opacity="0.35"/>
+
+  <rect x="120" y="185" width="300" height="220" rx="18" fill="url(#card)"/>
+  <rect x="450" y="185" width="300" height="220" rx="18" fill="url(#card)"/>
+  <rect x="780" y="185" width="300" height="220" rx="18" fill="url(#card)"/>
+  <rect x="120" y="430" width="460" height="210" rx="18" fill="url(#card)"/>
+  <rect x="610" y="430" width="470" height="210" rx="18" fill="url(#card)"/>
+
+  <g font-family="Manrope, sans-serif" fill="#0f172a">
+    <text x="150" y="230" font-size="22" font-weight="800">Road Issues</text>
+    <text x="150" y="262" font-size="15" opacity="0.78">Potholes, pavement damage, unsafe lanes</text>
+
+    <text x="480" y="230" font-size="22" font-weight="800">Water Complaints</text>
+    <text x="480" y="262" font-size="15" opacity="0.78">Logging, drainage, leakage hotspots</text>
+
+    <text x="810" y="230" font-size="22" font-weight="800">Sanitation</text>
+    <text x="810" y="262" font-size="15" opacity="0.78">Waste piles and collection delays</text>
+
+    <text x="150" y="475" font-size="22" font-weight="800">Streetlight & Safety</text>
+    <text x="150" y="507" font-size="15" opacity="0.78">Dark corridors, crossing hazards, visibility</text>
+
+    <text x="640" y="475" font-size="22" font-weight="800">Geo Intelligence</text>
+    <text x="640" y="507" font-size="15" opacity="0.78">Cluster zones, escalation and response flow</text>
+  </g>
+
+  <g>
+    <circle cx="190" cy="330" r="24" fill="#dc2626"/>
+    <circle cx="224" cy="330" r="24" fill="#f59e0b"/>
+    <circle cx="258" cy="330" r="24" fill="#16a34a"/>
+
+    <rect x="485" y="302" width="230" height="16" rx="8" fill="#0e7490" opacity="0.85"/>
+    <rect x="485" y="328" width="180" height="16" rx="8" fill="#06b6d4" opacity="0.8"/>
+    <rect x="485" y="354" width="130" height="16" rx="8" fill="#22c55e" opacity="0.8"/>
+
+    <rect x="820" y="300" width="220" height="70" rx="12" fill="#0f172a" opacity="0.1"/>
+    <circle cx="860" cy="335" r="14" fill="#f97316"/>
+    <circle cx="900" cy="335" r="14" fill="#dc2626"/>
+    <circle cx="940" cy="335" r="14" fill="#eab308"/>
+  </g>
+</svg>
