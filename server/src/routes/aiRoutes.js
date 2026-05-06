@@ -18,7 +18,6 @@ router.get(
   authorize("official", "admin"),
   getAIReviewQueue
 );
-
 router.patch(
   "/review-queue/:id/review",
   authenticate,

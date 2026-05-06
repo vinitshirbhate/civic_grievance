@@ -5,6 +5,7 @@ import { User } from "../models/User.js";
 import { AIAssessment } from "../models/AIAssessment.js";
 import { COMPLAINT_TAXONOMY, normalizeCategoryInput } from "../config/complaintTaxonomy.js";
 import { awardPoints } from "../utils/gamification.js";
+import { sendSMS } from "../utils/twilio.js";
 import { ApiError, asyncHandler } from "../utils/apiError.js";
 
 const SLA_HOURS_BY_SEVERITY = {
@@ -67,6 +68,18 @@ async function createNotification({ userId, complaintId, type, message }) {
     type: type || "GENERAL",
     message: String(message).trim(),
   });
+
+  try {
+    const user = await User.findById(userId);
+    if (user && user.mobile) {
+      const smsTypes = ["STATUS_UPDATED", "RATING_REQUEST", "COMPLAINT_ASSIGNED", "SLA_BREACHED"];
+      if (smsTypes.includes(type || "GENERAL")) {
+        await sendSMS(user.mobile, `Civic Grievance: ${message}`);
+      }
+    }
+  } catch (err) {
+    console.error("Error sending SMS notification:", err);
+  }
 }
 
 export const getComplaintTaxonomy = asyncHandler(async (_req, res) => {
