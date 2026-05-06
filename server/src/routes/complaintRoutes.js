@@ -21,7 +21,7 @@ const router = Router();
 router.get("/taxonomy", authenticate, authorize("citizen", "official", "admin"), getComplaintTaxonomy);
 router.get("/analytics/summary", authenticate, authorize("official", "admin"), getAnalyticsSummary);
 router.post("/", authenticate, authorize("citizen", "official", "admin"), createComplaint);
-router.get("/", authenticate, authorize("official", "admin"), listComplaints);
+router.get("/", authenticate, authorize("citizen", "official", "admin"), listComplaints);
 router.get("/mine", authenticate, authorize("citizen", "official", "admin"), listMyComplaints);
 router.get("/:id/events", authenticate, authorize("citizen", "official", "admin"), getComplaintEvents);
 router.get("/heatmap", authenticate, authorize("official", "admin"), getHeatmap);

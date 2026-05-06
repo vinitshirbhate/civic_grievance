@@ -10,7 +10,7 @@ import { ToastContainer, toast } from "react-toastify";
 import DashboardLinkButton from "../components/DashboardLinkButton";
 import GamificationProfile from "../components/GamificationProfile";
 import Navbar from "../components/Navbar";
-import PuneLocationPreviewMap from "../components/PuneLocationPreviewMap";
+import ComplaintsHeatmap from "../components/ComplaintsHeatmap";
 import ReportedComplaints from "../components/ReportedComplaints";
 import SpinnerModal from "../components/SpinnerModal";
 import { auth } from "../utils/Firebase";
@@ -21,6 +21,7 @@ import {
   fetchMyPointsLedger,
   getUserProfile,
 } from "../utils/userApi";
+import { fetchComplaints } from "../utils/complaintApi";
 
 const CitizenDashboard = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -28,7 +29,7 @@ const CitizenDashboard = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [gamificationSummary, setGamificationSummary] = useState(null);
   const [pointsLedger, setPointsLedger] = useState([]);
-  const [currentLocation, setCurrentLocation] = useState(null);
+  const [complaints, setComplaints] = useState([]);
   const navigate = useNavigate();
   const [params] = useSearchParams();
 
@@ -71,6 +72,16 @@ const CitizenDashboard = () => {
   }, [navigate, params]);
 
   useEffect(() => {
+    const unsubscribeComplaints = fetchComplaints((updatedComplaints) => {
+      setComplaints(updatedComplaints);
+    });
+
+    return () => {
+      unsubscribeComplaints();
+    };
+  }, []);
+
+  useEffect(() => {
     const loadEngagementData = async () => {
       try {
         const [ledger, summary] = await Promise.all([
@@ -87,17 +98,6 @@ const CitizenDashboard = () => {
 
     loadEngagementData();
   }, []);
-
-  const detectCurrentLocation = async () => {
-    try {
-      const detected = await identifyLocation();
-      setCurrentLocation(detected);
-      toast.success("Current Pune location detected.");
-    } catch (error) {
-      toast.error(error?.message || "Unable to detect location.");
-    }
-  };
-
 
   const handleInstall = () => {
     if (deferredPrompt) {
@@ -154,29 +154,8 @@ const CitizenDashboard = () => {
           )}
         </div>
 
-        <div className="surface-card">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-3">
-            <h3 className="text-lg font-bold">Your Current Pune Location</h3>
-            <button
-              type="button"
-              onClick={detectCurrentLocation}
-              className="brand-button border border-cyan-300 bg-cyan-50 text-cyan-900"
-            >
-              Detect Location
-            </button>
-          </div>
-          <p className="text-sm text-slate-600">Use this to verify the exact geolocation that will be attached to your complaint reports.</p>
-          {currentLocation ? (
-            <div className="mt-2 text-sm text-slate-700">
-              <p><b>Address:</b> {currentLocation.name}</p>
-              <p>
-                <b>Coordinates:</b> {Number(currentLocation.lat).toFixed(5)}, {Number(currentLocation.lng).toFixed(5)}
-              </p>
-            </div>
-          ) : (
-            <p className="text-sm text-slate-500 mt-2">Tap Detect Location to show your actual Pune coordinates.</p>
-          )}
-          <PuneLocationPreviewMap location={currentLocation || {}} />
+        <div className="surface-card p-0 overflow-hidden bg-transparent border-0 shadow-none">
+           <ComplaintsHeatmap complaints={complaints} />
         </div>
       </div>
 

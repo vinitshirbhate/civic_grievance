@@ -9,7 +9,7 @@ import { loginUser } from "../utils/apiAuth";
 
 const CitizenLogin = () => {
   const [FormData, setFormData] = useState({
-    email: "",
+    loginId: "",
     password: "",
   });
   const [Spinner, setSpinner] = useState(false);
@@ -66,10 +66,10 @@ const CitizenLogin = () => {
           >
             <TextField
               variant="outlined"
-              label="E-mail"
-              type="email"
+              label="Phone No. or E-mail"
+              type="text"
               onChange={(e) =>
-                setFormData({ ...FormData, email: e.target.value })
+                setFormData({ ...FormData, loginId: e.target.value })
               }
               required
             />
