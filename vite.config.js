@@ -6,7 +6,7 @@ import { VitePWA } from "vite-plugin-pwa";
 const manifestForPlugin = {
   registerType: "prompt",
   includeAssets: [
-    "Logo.png",
+    "/assets/logo.png",
     "maskable_icon_x48.png",
     "maskable_icon_x72.png",
     "maskable_icon_x96.png",
@@ -22,7 +22,7 @@ const manifestForPlugin = {
     description: "Application to report traffic issues around you",
     icons: [
       {
-        src: "/Logo.png",
+        src: "/assets/logo.png",
         sizes: "512x512",
         type: "image/png",
       },

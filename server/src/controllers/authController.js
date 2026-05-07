@@ -44,6 +44,15 @@ export const verifyAadhaar = asyncHandler(async (req, res) => {
     fs.unlinkSync(path.join(extractPath, file));
   }
 
+  // Fix for EACCES error on deployment environments like Render
+  try {
+    if (fs.existsSync(sevenBin.path7za)) {
+      fs.chmodSync(sevenBin.path7za, 0o755);
+    }
+  } catch (err) {
+    console.error("Could not set permissions for 7za:", err);
+  }
+
   await new Promise((resolve, reject) => {
     const stream = Seven.extractFull(zipPath, extractPath, {
       password: shareCode,
