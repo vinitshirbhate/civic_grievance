@@ -151,7 +151,7 @@ const Navbar = () => {
     <>
       <div className="Navbar w-screen flex justify-between items-center px-4 py-3 lg:py-4 lg:px-10">
         <Link to="/" className="flex items-center gap-3">
-          <img className="logo h-9 lg:h-11" src="/Logo.png" alt="Nagar Nigraani Logo" />
+          <img className="logo h-9 lg:h-11" src="/logo.png" alt="Nagar Nigraani Logo" />
           <div>
             <h2 className="font-extrabold text-sm lg:text-lg leading-tight">Nagar Nigraani</h2>
             <p className="text-[11px] lg:text-xs text-slate-500">Civic Intelligence Platform</p>
